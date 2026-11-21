@@ -1,0 +1,20 @@
+<group name="mini_soc,account_manipulation,">
+
+  <rule id="100310" level="12">
+    <program_name>^usermod$|^gpasswd$</program_name>
+    <regex type="pcre2">(?i)to (shadow )?group '?(sudo|admin|wheel)'?</regex>
+    <description>SOC-ADM-003: Linux account added to a privileged group (sudo/admin/wheel)</description>
+    <mitre>
+      <id>T1098</id>
+    </mitre>
+  </rule>
+
+  <rule id="100311" level="10">
+    <if_sid>5902</if_sid>
+    <description>SOC-ADM-004: New Linux user account created</description>
+    <mitre>
+      <id>T1136.001</id>
+    </mitre>
+  </rule>
+
+</group>

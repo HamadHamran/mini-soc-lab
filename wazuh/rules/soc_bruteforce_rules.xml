@@ -1,0 +1,21 @@
+<group name="mini_soc,brute_force,">
+
+  <rule id="100100" level="10" frequency="5" timeframe="60" ignore="120">
+    <if_matched_sid>5760</if_matched_sid>
+    <same_srcip />
+    <description>SOC-BF-001: SSH brute force against valid accounts from $(srcip)</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100101" level="10" frequency="5" timeframe="60" ignore="120">
+    <if_matched_sid>5710</if_matched_sid>
+    <same_srcip />
+    <description>SOC-BF-002: SSH username enumeration / brute force with non-existent users from $(srcip)</description>
+    <mitre>
+      <id>T1110.003</id>
+    </mitre>
+  </rule>
+
+</group>

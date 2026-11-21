@@ -1,0 +1,30 @@
+<group name="mini_soc,windows,">
+
+  <rule id="100110" level="10" frequency="5" timeframe="60" ignore="120">
+    <if_matched_sid>60122</if_matched_sid>
+    <same_field>win.eventdata.ipAddress</same_field>
+    <description>SOC-BF-003: Windows logon brute force from $(win.eventdata.ipAddress) against $(win.eventdata.targetUserName)</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100300" level="12">
+    <if_sid>60144</if_sid>
+    <field name="win.eventdata.targetUserName" type="pcre2">(?i)^Administrators$</field>
+    <description>SOC-ADM-001: Account $(win.eventdata.memberSid) added to local Administrators by $(win.eventdata.subjectUserName)</description>
+    <mitre>
+      <id>T1098</id>
+    </mitre>
+  </rule>
+
+  <rule id="100301" level="10">
+    <if_sid>60109</if_sid>
+    <field name="win.system.eventID">^4720$</field>
+    <description>SOC-ADM-002: New local Windows account $(win.eventdata.targetUserName) created by $(win.eventdata.subjectUserName)</description>
+    <mitre>
+      <id>T1136.001</id>
+    </mitre>
+  </rule>
+
+</group>

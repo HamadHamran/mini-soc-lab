@@ -1,0 +1,45 @@
+<group name="mini_soc,powershell,">
+
+  <rule id="100200" level="12">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\(powershell|pwsh)\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)\s-e(nc(odedcommand)?|c)?\s+[A-Za-z0-9+/=]{16,}</field>
+    <description>SOC-PS-001: Encoded PowerShell command executed by $(win.eventdata.user)</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1027</id>
+    </mitre>
+  </rule>
+
+  <rule id="100201" level="12">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\(powershell|pwsh)\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(downloadstring|downloadfile|net\.webclient|invoke-webrequest|\biwr\b|start-bitstransfer)</field>
+    <description>SOC-PS-002: PowerShell download cradle executed by $(win.eventdata.user)</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1105</id>
+    </mitre>
+  </rule>
+
+  <rule id="100202" level="8">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\(powershell|pwsh)\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(-(ep|exec|executionpolicy)\s+bypass|-w(indowstyle)?\s+hidden)</field>
+    <description>SOC-PS-003: PowerShell launched with execution policy bypass or hidden window</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1564.003</id>
+    </mitre>
+  </rule>
+
+  <rule id="100203" level="12">
+    <if_sid>91802</if_sid>
+    <field name="win.eventdata.scriptBlockText" type="pcre2">(?i)(invoke-expression|\biex\b|downloadstring|net\.webclient|amsiutils|invoke-mimikatz)</field>
+    <description>SOC-PS-004: Suspicious PowerShell script block content detected</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+
+</group>
